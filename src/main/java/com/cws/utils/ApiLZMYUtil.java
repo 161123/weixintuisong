@@ -1,4 +1,11 @@
 package com.cws.utils;
+/**
+ * <h3>weather-push</h3>
+ * <p></p>
+ *
+ * @author : 你的名字
+ * @date : 2023-10-07 15:28
+ **/
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -11,13 +18,14 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * 彩虹屁接口调用
- * 对接天行数据（彩虹屁）api的工具类
- * @author cws
- */
-public class RainbowUtil {
-    public static String getRainbow() {
-        String httpUrl = "http://api.tianapi.com/caihongpi/index?key=" + PushConfigure.getRainbowKey();
+ * <h3>weather-push</h3>
+ * <p></p>
+ * @author : 头上有犄角
+ * @date : 2023-10-07 15:28
+ **/
+public class ApiLZMYUtil {
+    public static String getInspirationalOldSaying() {
+        String httpUrl = "https://apis.tianapi.com/lzmy/index?key=" + PushConfigure.getRainbowKey();
         BufferedReader reader = null;
         String result = null;
         StringBuilder stringBuilder = new StringBuilder();
@@ -39,12 +47,15 @@ public class RainbowUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println(result);
         JSONObject jsonObject = JSONObject.parseObject(result);
         if (jsonObject == null) {
             return "";
         }
         JSONArray newslist = jsonObject.getJSONArray("newslist");
-        return "\n" + newslist.getJSONObject(0).getString("content");
+        return newslist.getJSONObject(0).getString("saying");
     }
+
+
 
 }

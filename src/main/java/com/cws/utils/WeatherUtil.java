@@ -32,11 +32,14 @@ public class WeatherUtil {
         JSONArray forecasts = json.getJSONObject("result").getJSONArray("forecasts");
         List<Weather> weathers = forecasts.toJavaList(Weather.class);
         Weather weather = weathers.get(0);
+        Weather weather2 = weathers.get(0);
         JSONObject now = json.getJSONObject("result").getJSONObject("now");
         JSONObject location = json.getJSONObject("result").getJSONObject("location");
         weather.setText_now(now.getString("text"));
         weather.setTemp(now.getString("temp"));
-        weather.setCity(location.getString("city"));
+        weather.setCity(location.getString("name"));
+weather.setText_night(weather2.getText_night());
+        System.out.println(weather);
         return weather;
     }
 }

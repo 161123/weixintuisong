@@ -3,6 +3,8 @@ package com.cws.configure;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * PushConfigure
  *
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties("wechat")
 public class PushConfigure {
+
     /**
      * 微信公众平台的appID
      */
@@ -44,11 +47,16 @@ public class PushConfigure {
      * 模板ID
      */
     private static String templateId;
+    private static String template2Id;
 
     /**
      * 天行数据apiKey
      */
     private static String rainbowKey;
+
+    private static String user2Id;
+    private static String user3Id;
+    private static List<String> user4Id;
 
     public static String getAppId() {
         return appId;
@@ -106,12 +114,36 @@ public class PushConfigure {
         PushConfigure.userId = userId;
     }
 
+    public static String getUser2Id() {
+        return user2Id;
+    }
+
+    public void setUser2Id(String user2Id) {
+        PushConfigure.userId = user2Id;
+    }
+
+    public static String getUser3Id() {
+        return user3Id;
+    }
+
+    public void setUser3Id(String user3Id) {
+        PushConfigure.userId = user3Id;
+    }
+
     public static String getTemplateId() {
         return templateId;
     }
 
     public void setTemplateId(String templateId) {
         PushConfigure.templateId = templateId;
+    }
+
+    public static String getTemplate2Id() {
+        return template2Id;
+    }
+
+    public void setTemplate2Id(String template2Id) {
+        PushConfigure.template2Id = template2Id;
     }
 
     public static String getRainbowKey() {

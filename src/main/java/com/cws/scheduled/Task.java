@@ -15,8 +15,14 @@ import org.springframework.scheduling.annotation.Scheduled;
 @Configuration
 public class Task {
     // 定时 早8点推送  0秒 0分 8时
-    @Scheduled(cron = "0 0 8 * * ?")
+    @Scheduled(cron = "0 0 7 * * ?")
+//    @Scheduled(cron = "0/5 * * * * ?")
     public void goodMorning() {
-        PushUtil.push();
+        PushUtil.morningPush();
     }
+//    @Scheduled(cron = "0 0 7 * * ?")
+//    @Scheduled(cron = "0/5 * * * * ?")
+//    public void memorizewords() {
+//        PushUtil.memorizewords();
+//    }
 }

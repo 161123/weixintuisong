@@ -18,13 +18,15 @@ public class PushUtil {
     /**
      * 消息推送主要业务代码
      */
-    public static String push() {
+    public static String morningPush() {
         //1，配置
         WxMpInMemoryConfigStorage wxStorage = new WxMpInMemoryConfigStorage();
         wxStorage.setAppId(PushConfigure.getAppId());
         wxStorage.setSecret(PushConfigure.getSecret());
+
         WxMpService wxMpService = new WxMpServiceImpl();
         wxMpService.setWxMpConfigStorage(wxStorage);
+
         // 推送消息
         WxMpTemplateMessage templateMessage = WxMpTemplateMessage.builder()
                 .toUser(PushConfigure.getUserId())
@@ -39,16 +41,17 @@ public class PushUtil {
         } else {
             templateMessage.addData(new WxMpTemplateData("date", weather.getDate() + "  " + weather.getWeek(), "#00BFFF"));
             templateMessage.addData(new WxMpTemplateData("weather", weather.getText_now(), "#00FFFF"));
+            templateMessage.addData(new WxMpTemplateData("night", weather.getText_night(), "#00FFFF"));
             templateMessage.addData(new WxMpTemplateData("low", weather.getLow() + "", "#173177"));
             templateMessage.addData(new WxMpTemplateData("temp", weather.getTemp() + "", "#EE212D"));
             templateMessage.addData(new WxMpTemplateData("high", weather.getHigh() + "", "#FF6347"));
             templateMessage.addData(new WxMpTemplateData("city", weather.getCity() + "", "#173177"));
-        }
+         }
 
         templateMessage.addData(new WxMpTemplateData("loveDays", loveDays + "", "#FF1493"));
         templateMessage.addData(new WxMpTemplateData("birthdays", birthdays + "", "#FFA500"));
 
-        String remark = "亲爱的乖乖宝贝，早上好!记得要吃早餐哦，今天也要开心哦 =^_^= ";
+        String remark = "亲爱的乖乖宝贝，早上好! =^_^= ";
         if (loveDays % 365 == 0) {
             remark = "\n今天是恋爱" + (loveDays / 365) + "周年纪念日!";
         }
@@ -58,11 +61,18 @@ public class PushUtil {
         if (loveDays % 365 == 0 && birthdays == 0) {
             remark = "\n今天是生日,也是恋爱" + (loveDays / 365) + "周年纪念日!";
         }
-
         templateMessage.addData(new WxMpTemplateData("remark", remark, "#FF1493"));
-        templateMessage.addData(new WxMpTemplateData("rainbow", RainbowUtil.getRainbow(), "#FF69B4"));
+        templateMessage.addData(new WxMpTemplateData("rainbow", ApiTextUtil.getRainbow(), "#FF69B4"));
+        templateMessage.addData(new WxMpTemplateData("wc_day", weather.getWc_day(), "#FF69B4"));
+        templateMessage.addData(new WxMpTemplateData("wd_day", weather.getWd_day(), "#FF69B4"));
+        templateMessage.addData(new WxMpTemplateData("wc_night", weather.getWc_night(), "#FF69B4"));
+        templateMessage.addData(new WxMpTemplateData("wd_night", weather.getWd_night(), "#FF69B4"));
         System.out.println(templateMessage.toJson());
         try {
+            wxMpService.getTemplateMsgService().sendTemplateMsg(templateMessage);
+
+            //这个是她的微信号
+            templateMessage.setToUser(PushConfigure.getUser2Id());
             wxMpService.getTemplateMsgService().sendTemplateMsg(templateMessage);
         } catch (Exception e) {
             System.out.println("推送失败：" + e.getMessage());
@@ -70,4 +80,5 @@ public class PushUtil {
         }
         return "推送成功!";
     }
+
 }

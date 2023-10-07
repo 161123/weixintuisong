@@ -13,6 +13,6 @@ public class TestController {
 
     @RequestMapping("test")
     public String test() {
-        return PushUtil.push();
+        return PushUtil.morningPush();
     }
 }
